@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interaktives Arbeitsblatt: Finalsätze (B1.1)</title>
+  <style>
+    :root {
+      --primary: #2563eb;
+      --primary-hover: #1d4ed8;
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --text: #1e293b;
+      --border: #cbd5e1;
+      --correct: #16a34a;
+      --incorrect: #dc2626;
+      --selected: #fde047;
+    }
+    
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      margin: 0;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 850px;
+      margin: 0 auto;
+      background: var(--card-bg);
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      color: #0f172a;
+      border-bottom: 2px solid var(--primary);
+      padding-bottom: 10px;
+      text-align: center;
+    }
+
+    .grammar-box {
+      background-color: #eff6ff;
+      border-left: 4px solid var(--primary);
+      padding: 15px 20px;
+      margin-bottom: 30px;
+      border-radius: 0 8px 8px 0;
+    }
+
+    .grammar-box h3 {
+      margin-top: 0;
+      color: #1e40af;
+    }
+
+    .exercise {
+      margin-bottom: 35px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .exercise h2 {
+      font-size: 1.2rem;
+      color: #334155;
+      margin-bottom: 15px;
+    }
+
+    .item {
+      margin-bottom: 20px;
+      padding: 12px;
+      background: #f1f5f9;
+      border-radius: 8px;
+    }
+
+    .word {
+      display: inline-block;
+      padding: 2px 6px;
+      margin: 2px;
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      cursor: pointer;
+      user-select: none;
+      transition: all 0.2s;
+    }
+
+    .word:hover {
+      background: #e2e8f0;
+    }
+
+    .word.selected {
+      background-color: var(--selected);
+      font-weight: bold;
+      border-color: #ca8a04;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 8px 12px;
+      margin-top: 8px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-size: 0.95rem;
+      box-sizing: border-box;
+    }
+
+    select {
+      padding: 6px 10px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: white;
+      font-size: 0.95rem;
+    }
+
+    .feedback {
+      font-weight: bold;
+      margin-top: 5px;
+      font-size: 0.9rem;
+    }
+
+    .feedback.correct {
+      color: var(--correct);
+    }
+
+    .feedback.incorrect {
+      color: var(--incorrect);
+    }
+
+    .correct-answer-text {
+      font-weight: normal;
+      color: #475569;
+      font-style: italic;
+    }
+
+    .btn {
+      background-color: var(--primary);
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      font-size: 1rem;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.2s;
+      font-weight: 600;
+    }
+
+    .btn:hover {
+      background-color: var(--primary-hover);
+    }
+
+    .btn:disabled {
+      background-color: #94a3b8;
+      cursor: not-allowed;
+    }
+
+    .controls {
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+      margin-top: 25px;
+    }
+
+    .send-section {
+      margin-top: 40px;
+      padding: 20px;
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      border-radius: 8px;
+    }
+
+    .send-section h3 {
+      margin-top: 0;
+      color: #166534;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: 600;
+    }
+
+    #status-msg {
+      margin-top: 15px;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    .score-display {
+      text-align: center;
+      font-size: 1.3rem;
+      font-weight: bold;
+      margin: 20px 0;
+      color: var(--primary);
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h1>Finalsätze: <i>um...zu</i>, <i>damit</i> und <i>weil</i></h1>
+  
+  <div class="grammar-box">
+    <h3>Grammatik-Hilfe:</h3>
+    <p><b>1 Subjekt:</b> <i>um ... zu</i> + Infinitiv<br>
+    <i>Beispiel:</i> Ich lerne Deutsch. Ich möchte in Deutschland arbeiten. → Ich lerne Deutsch, <b>um</b> in Deutschland <b>zu arbeiten</b>.</p>
+    <p><b>2 Subjekte:</b> <i>damit</i> + Nebensatz (Verb am Ende)<br>
+    <i>Beispiel:</i> Ich arbeite viel. Das Projekt soll fertig werden. → Ich arbeite viel, <b>damit</b> das Projekt fertig <b>wird</b>.</p>
+    <p><b>Grund (Warum?):</b> <i>weil</i> + Nebensatz (Verb am Ende)<br>
+    <i>Beispiel:</i> Tina geht ins Ausland, <b>weil</b> sie dort eine Stelle gefunden hat.</p>
+  </div>
+
+  <form id="worksheet-form">
+    <!-- ÜBUNG 3 -->
+    <div class="exercise" id="ex3">
+      <h2>Übung 3: Subjekte markieren und Sätze verbinden</h2>
+      <p><small><b>Schritt a:</b> Klicken Sie auf die Subjekte in beiden Sätzen.<br><b>Schritt b:</b> Schreiben Sie den neuen Satz mit <i>um...zu</i> oder <i>damit</i>.</small></p>
+
+      <div class="item" data-id="3_1">
+        <p>1. 
+          <span class="word" onclick="toggleSelect(this)">Ich</span> <span class="word" onclick="toggleSelect(this)">nehme</span> <span class="word" onclick="toggleSelect(this)">an</span> <span class="word" onclick="toggleSelect(this)">einem</span> <span class="word" onclick="toggleSelect(this)">Tanzkurs</span> <span class="word" onclick="toggleSelect(this)">teil.</span>
+          <span class="word" onclick="toggleSelect(this)">Ich</span> <span class="word" onclick="toggleSelect(this)">möchte</span> <span class="word" onclick="toggleSelect(this)">fit</span> <span class="word" onclick="toggleSelect(this)">sein.</span>
+        </p>
+        <input type="text" placeholder="Ich nehme an einem Tanzkurs teil, ..." autocomplete="off">
+        <div class="feedback"></div>
+      </div>
+
+      <div class="item" data-id="3_2">
+        <p>2. 
+          <span class="word" onclick="toggleSelect(this)">Ich</span> <span class="word" onclick="toggleSelect(this)">lade</span> <span class="word" onclick="toggleSelect(this)">meine</span> <span class="word" onclick="toggleSelect(this)">Nachbarn</span> <span class="word" onclick="toggleSelect(this)">ein.</span>
+          <span class="word" onclick="toggleSelect(this)">Ich</span> <span class="word" onclick="toggleSelect(this)">möchte</span> <span class="word" onclick="toggleSelect(this)">sie</span> <span class="word" onclick="toggleSelect(this)">kennenlernen.</span>
+        </p>
+        <input type="text" placeholder="Ich lade meine Nachbarn ein, ..." autocomplete="off">
+        <div class="feedback"></div>
+      </div>
+
+      <div class="item" data-id="3_3">
+        <p>3. 
+          <span class="word" onclick="toggleSelect(this)">Wir</span> <span class="word" onclick="toggleSelect(this)">gehen</span> <span class="word" onclick="toggleSelect(this)">ins</span> <span class="word" onclick="toggleSelect(this)">Kino.</span>
+          <span class="word" onclick="toggleSelect(this)">Wir</span> <span class="word" onclick="toggleSelect(this)">wollen</span> <span class="word" onclick="toggleSelect(this)">den</span> <span class="word" onclick="toggleSelect(this)">neuen</span> <span class="word" onclick="toggleSelect(this)">Film</span> <span class="word" onclick="toggleSelect(this)">sehen.</span>
+        </p>
+        <input type="text" placeholder="Wir gehen ins Kino, ..." autocomplete="off">
+        <div class="feedback"></div>
+      </div>
+
+      <div class="item" data-id="3_4">
+        <p>4. 
+          <span class="word" onclick="toggleSelect(this)">Ich</span> <span class="word" onclick="toggleSelect(this)">bereite</span> <span class="word" onclick="toggleSelect(this)">heute</span> <span class="word" onclick="toggleSelect(this)">schon</span> <span class="word" onclick="toggleSelect(this)">alles</span> <span class="word" onclick="toggleSelect(this)">vor.</span>
+          <span class="word" onclick="toggleSelect(this)">Wir</span> <span class="word" onclick="toggleSelect(this)">können</span> <span class="word" onclick="toggleSelect(this)">morgen</span> <span class="word" onclick="toggleSelect(this)">früh</span> <span class="word" onclick="toggleSelect(this)">schnell</span> <span class="word" onclick="toggleSelect(this)">losgehen.</span>
+        </p>
+        <input type="text" placeholder="Ich bereite heute schon alles vor, ..." autocomplete="off">
+        <div class="feedback"></div>
+      </div>
+
+      <div class="item" data-id="3_5">
+        <p>5. 
+          <span class="word" onclick="toggleSelect(this)">Ich</span> <span class="word" onclick="toggleSelect(this)">creme</span> <span class="word" onclick="toggleSelect(this)">meinen</span> <span class="word" onclick="toggleSelect(this)">Sohn</span> <span class="word" onclick="toggleSelect(this)">ein.</span>
+          <span class="word" onclick="toggleSelect(this)">Er</span> <span class="word" onclick="toggleSelect(this)">soll</span> <span class="word" onclick="toggleSelect(this)">keinen</span> <span class="word" onclick="toggleSelect(this)">Sonnenbrand</span> <span class="word" onclick="toggleSelect(this)">bekommen.</span>
+        </p>
+        <input type="text" placeholder="Ich creme meinen Sohn ein, ..." autocomplete="off">
+        <div class="feedback"></div>
+      </div>
+
+      <div class="item" data-id="3_6">
+        <p>6. 
+          <span class="word" onclick="toggleSelect(this)">Er</span> <span class="word" onclick="toggleSelect(this)">spielt</span> <span class="word" onclick="toggleSelect(this)">Schach</span> <span class="word" onclick="toggleSelect(this)">gegen</span> <span class="word" onclick="toggleSelect(this)">den</span> <span class="word" onclick="toggleSelect(this)">Computer.</span>
+          <span class="word" onclick="toggleSelect(this)">Er</span> <span class="word" onclick="toggleSelect(this)">möchte</span> <span class="word" onclick="toggleSelect(this)">sein</span> <span class="word" onclick="toggleSelect(this)">Gehirn</span> <span class="word" onclick="toggleSelect(this)">trainieren.</span>
+        </p>
+        <input type="text" placeholder="Er spielt Schach gegen den Computer, ..." autocomplete="off">
+        <div class="feedback"></div>
+      </div>
+
+      <div class="item" data-id="3_7">
+        <p>7. 
+          <span class="word" onclick="toggleSelect(this)">Ich</span> <span class="word" onclick="toggleSelect(this)">schreibe</span> <span class="word" onclick="toggleSelect(this)">dir</span> <span class="word" onclick="toggleSelect(this)">eine</span> <span class="word" onclick="toggleSelect(this)">E-Mail.</span>
+          <span class="word" onclick="toggleSelect(this)">Du</span> <span class="word" onclick="toggleSelect(this)">sollst</span> <span class="word" onclick="toggleSelect(this)">mich</span> <span class="word" onclick="toggleSelect(this)">nicht</span> <span class="word" onclick="toggleSelect(this)">vergessen.</span>
+        </p>
+        <input type="text" placeholder="Ich schreibe dir eine E-Mail, ..." autocomplete="off">
+        <div class="feedback"></div>
+      </div>
+    </div>
+
+    <!-- ÜBUNG 4 -->
+    <div class="exercise" id="ex4">
+      <h2>Übung 4: Marias Leben. Schreiben Sie Sätze mit <i>um...zu</i> oder <i>damit</i>.</h2>
+
+      <div class="item" data-id="4_1">
+        <p>1. Maria lernt Deutsch. Sie möchte in Deutschland arbeiten.</p>
+        <input type="text" placeholder="Maria lernt Deutsch, ..." autocomplete="off">
+        <div class="feedback"></div>
+      </div>
+
+      <div class="item" data-id="4_2">
+        <p>2. Sie macht jetzt ein Praktikum. Sie möchte den Beruf kennenlernen.</p>
+        <input type="text" placeholder="Sie macht jetzt ein Praktikum, ..." autocomplete="off">
+        <div class="feedback"></div>
+      </div>
+
+      <div class="item" data-id="4_3">
+        <p>3. Sie arbeitet viel. Das Projekt soll fertig werden.</p>
+        <input type="text" placeholder="Sie arbeitet viel, ..." autocomplete="off">
+        <div class="feedback"></div>
+      </div>
+
+      <div class="item" data-id="4_4">
+        <p>4. Abends geht sie in den Club. Sie möchte neue Leute kennenlernen.</p>
+        <input type="text" placeholder="Abends geht sie in den Club, ..." autocomplete="off">
+        <div class="feedback"></div>
+      </div>
+
+      <div class="item" data-id="4_5">
+        <p>5. Sie möchte ein Flugticket kaufen. Ihre Mutter soll zu Besuch kommen können.</p>
+        <input type="text" placeholder="Sie möchte ein Flugticket kaufen, ..." autocomplete="off">
+        <div class="feedback"></div>
+      </div>
+    </div>
+
+    <!-- ÜBUNG 5 -->
+    <div class="exercise" id="ex5">
+      <h2>Übung 5: Wozu oder warum? Ergänzen Sie <i>damit</i> oder <i>weil</i>.</h2>
+
+      <div class="item" data-id="5_1">
+        <p>1. Lisa geht ins Ausland, 
+          <select><option value="">-- wählen --</option><option value="damit">damit</option><option value="weil">weil</option></select> 
+          ihre Tochter dort die Schule beginnt und die Sprache lernt.
+        </p>
+        <div class="feedback"></div>
+      </div>
+
+      <div class="item" data-id="5_2">
+        <p>2. Tina geht ins Ausland, 
+          <select><option value="">-- wählen --</option><option value="damit">damit</option><option value="weil">weil</option></select> 
+          sie dort eine Arbeitsstelle gefunden hat.
+        </p>
+        <div class="feedback"></div>
+      </div>
+
+      <div class="item" data-id="5_3">
+        <p>3. Mireille lernt Deutsch, 
+          <select><option value="">-- wählen --</option><option value="damit">damit</option><option value="weil">weil</option></select> 
+          ihr Mann Deutscher ist.
+        </p>
+        <div class="feedback"></div>
+      </div>
+
+      <div class="item" data-id="5_4">
+        <p>4. Anna lernt Deutsch, 
+          <select><option value="">-- wählen --</option><option value="damit">damit</option><option value="weil">weil</option></select> 
+          sie mit ihren deutschen Nachbarn sprechen kann.
+        </p>
+        <div class="feedback"></div>
+      </div>
+
+      <div class="item" data-id="5_5">
+        <p>5. Kerem macht die Prüfung, 
+          <select><option value="">-- wählen --</option><option value="damit">damit</option><option value="weil">weil</option></select> 
+          er weiß, was er kann.
+        </p>
+        <div class="feedback"></div>
+      </div>
+
+      <div class="item" data-id="5_6">
+        <p>6. Nicolas macht eine Prüfung, 
+          <select><option value="">-- wählen --</option><option value="damit">damit</option><option value="weil">weil</option></select> 
+          er sie für seine Arbeit braucht.
+        </p>
+        <div class="feedback"></div>
+      </div>
+
+      <div class="item" data-id="5_7">
+        <p>7. Ich trage eine Brille, 
+          <select><option value="">-- wählen --</option><option value="damit">damit</option><option value="weil">weil</option></select> 
+          meine Augen schlecht sind.
+        </p>
+        <div class="feedback"></div>
+      </div>
+
+      <div class="item" data-id="5_8">
+        <p>8. Du trägst eine Brille, 
+          <select><option value="">-- wählen --</option><option value="damit">damit</option><option value="weil">weil</option></select> 
+          du intelligent aussiehst.
+        </p>
+        <div class="feedback"></div>
+      </div>
+    </div>
+  </form>
+
+  <div class="controls">
+    <button type="button" class="btn" onclick="checkAnswers()">Antworten prüfen</button>
+  </div>
+
+  <div id="score" class="score-display"></div>
+
+  <!-- ENVÍO DE RESULTADOS -->
+  <div class="send-section">
+    <h3>Ergebnisse an die Lehrkraft senden</h3>
+    <div class="form-group">
+      <label for="student-name">Dein Name / Name des Schülers:</label>
+      <input type="text" id="student-name" placeholder="z. B. Maria Pérez" style="margin-top: 0;">
+    </div>
+
+    <button type="button" class="btn" id="send-btn" onclick="sendToGoogleSheets()">Ergebnisse jetzt senden</button>
+    <div id="status-msg"></div>
+  </div>
+</div>
+
+<script>
+  // Soluciones oficiales del libro
+  const solutions = {
+    ex3: {
+      "3_1": { subjects: ["Ich", "Ich"], sentence: "Ich nehme an einem Tanzkurs teil, um fit zu sein." },
+      "3_2": { subjects: ["Ich", "Ich"], sentence: "Ich lade meine Nachbarn ein, um sie kennenzulernen." },
+      "3_3": { subjects: ["Wir", "Wir"], sentence: "Wir gehen ins Kino, um den neuen Film zu sehen." },
+      "3_4": { subjects: ["Ich", "Wir"], sentence: "Ich bereite heute schon alles vor, damit wir morgen früh schnell losgehen können." },
+      "3_5": { subjects: ["Ich", "Er"], sentence: "Ich creme meinen Sohn ein, damit er keinen Sonnenbrand bekommt." },
+      "3_6": { subjects: ["Er", "Er"], sentence: "Er spielt Schach gegen den Computer, um sein Gehirn zu trainieren." },
+      "3_7": { subjects: ["Ich", "Du"], sentence: "Ich schreibe dir eine E-Mail, damit du mich nicht vergisst." }
+    },
+    ex4: {
+      "4_1": "Maria lernt Deutsch, um in Deutschland zu arbeiten.",
+      "4_2": "Sie macht jetzt ein Praktikum, um den Beruf kennenzulernen.",
+      "4_3": "Sie arbeitet viel, damit das Projekt fertig wird.",
+      "4_4": "Abends geht sie in den Club, um neue Leute kennenzulernen.",
+      "4_5": "Sie möchte ein Flugticket kaufen, damit ihre Mutter zu Besuch kommen kann."
+    },
+    ex5: {
+      "5_1": "damit",
+      "5_2": "weil",
+      "5_3": "weil",
+      "5_4": "damit",
+      "5_5": "damit",
+      "5_6": "weil",
+      "5_7": "weil",
+      "5_8": "damit"
+    }
+  };
+
+  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzaDgQvVmluBmHWADxQOJrqYqKTiE_8aBJ-E5HkJoy53XZAVKnxYvRJRL9_XJS0GbRT/exec";
+
+  function toggleSelect(el) {
+    el.classList.toggle('selected');
+  }
+
+  function normalize(str) {
+    return str.trim().toLowerCase().replace(/\s+/g, ' ').replace(/[.!?]/g, '');
+  }
+
+  function checkAnswers() {
+    let score = 0;
+    let total = 0;
+
+    // Übung 3
+    for (let key in solutions.ex3) {
+      const item = document.querySelector(`[data-id="${key}"]`);
+      const selectedWords = Array.from(item.querySelectorAll('.word.selected')).map(w => w.textContent.replace(/[.!?]/g, ''));
+      const inputVal = item.querySelector('input').value;
+      const feedback = item.querySelector('.feedback');
+      
+      const targetSubj = solutions.ex3[key].subjects;
+      const targetSent = solutions.ex3[key].sentence;
+
+      // Evaluar sujetos (1 punto)
+      total++;
+      const subjCorrect = JSON.stringify(selectedWords.sort()) === JSON.stringify(targetSubj.sort());
+      
+      // Evaluar frase (1 punto)
+      total++;
+      const sentCorrect = normalize(inputVal) === normalize(targetSent);
+
+      if (subjCorrect && sentCorrect) {
+        score += 2;
+        feedback.className = "feedback correct";
+        feedback.innerHTML = "Richtig! (Subjekte & Satz korrekt)";
+      } else {
+        if (subjCorrect) score += 1;
+        if (sentCorrect) score += 1;
+        feedback.className = "feedback incorrect";
+        feedback.innerHTML = `Falsch.<br>
+          <span class="correct-answer-text">Richtige Subjekte: <b>${targetSubj.join(', ')}</b><br>
+          Richtiger Satz: <b>${targetSent}</b></span>`;
+      }
+    }
+
+    // Übung 4
+    for (let key in solutions.ex4) {
+      total++;
+      const item = document.querySelector(`[data-id="${key}"]`);
+      const inputVal = item.querySelector('input').value;
+      const feedback = item.querySelector('.feedback');
+      const targetSent = solutions.ex4[key];
+
+      if (normalize(inputVal) === normalize(targetSent)) {
+        score++;
+        feedback.className = "feedback correct";
+        feedback.innerHTML = "Richtig!";
+      } else {
+        feedback.className = "feedback incorrect";
+        feedback.innerHTML = `Falsch.<br><span class="correct-answer-text">Lösung: <b>${targetSent}</b></span>`;
+      }
+    }
+
+    // Übung 5
+    for (let key in solutions.ex5) {
+      total++;
+      const item = document.querySelector(`[data-id="${key}"]`);
+      const selectVal = item.querySelector('select').value;
+      const feedback = item.querySelector('.feedback');
+      const targetVal = solutions.ex5[key];
+
+      if (selectVal === targetVal) {
+        score++;
+        feedback.className = "feedback correct";
+        feedback.innerHTML = "Richtig!";
+      } else {
+        feedback.className = "feedback incorrect";
+        feedback.innerHTML = `Falsch.<br><span class="correct-answer-text">Lösung: <b>${targetVal}</b></span>`;
+      }
+    }
+
+    const scoreDisplay = document.getElementById('score');
+    scoreDisplay.innerHTML = `Gesamtergebnis: ${score} von ${total} Punkten (${Math.round((score/total)*100)}%)`;
+    
+    return { score, total, percentage: Math.round((score/total)*100) };
+  }
+
+  function sendToGoogleSheets() {
+    const name = document.getElementById('student-name').value.trim();
+    const statusMsg = document.getElementById('status-msg');
+    const sendBtn = document.getElementById('send-btn');
+
+    if (!name) {
+      statusMsg.style.color = 'var(--incorrect)';
+      statusMsg.innerText = 'Bitte gib deinen Namen ein!';
+      return;
+    }
+
+    const evalResult = checkAnswers();
+    
+    // Recopilar respuestas para el detalle
+    const answersData = {
+      ex3: {},
+      ex4: {},
+      ex5: {}
+    };
+
+    document.querySelectorAll('#ex3 .item').forEach(item => {
+      const id = item.getAttribute('data-id');
+      const selected = Array.from(item.querySelectorAll('.word.selected')).map(w => w.textContent);
+      const text = item.querySelector('input').value;
+      answersData.ex3[id] = { subjekte: selected, satz: text };
+    });
+
+    document.querySelectorAll('#ex4 .item').forEach(item => {
+      const id = item.getAttribute('data-id');
+      answersData.ex4[id] = item.querySelector('input').value;
+    });
+
+    document.querySelectorAll('#ex5 .item').forEach(item => {
+      const id = item.getAttribute('data-id');
+      answersData.ex5[id] = item.querySelector('select').value;
+    });
+
+    const now = new Date();
+    const payload = {
+      timestamp: now.toLocaleString('es-ES'),
+      name: name,
+      score: `${evalResult.score}/${evalResult.total} (${evalResult.percentage}%) | Detalle: ${JSON.stringify(answersData)}`
+    };
+
+    sendBtn.disabled = true;
+    statusMsg.style.color = '#1e293b';
+    statusMsg.innerText = 'Ergebnisse werden gesendet...';
+
+    fetch(SCRIPT_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(payload)
+    })
+    .then(() => {
+      statusMsg.style.color = 'var(--correct)';
+      statusMsg.innerText = 'Erfolgreich gesendet! Vielen Dank.';
+      sendBtn.disabled = false;
+    })
+    .catch(error => {
+      console.error('Error:', error);
+      statusMsg.style.color = 'var(--incorrect)';
+      statusMsg.innerText = 'Fehler beim Senden. Bitte erneut versuchen.';
+      sendBtn.disabled = false;
+    });
+  }
+</script>
+
+</body>
+</html>
